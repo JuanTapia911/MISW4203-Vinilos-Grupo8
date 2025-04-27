@@ -54,6 +54,7 @@ dependencies {
 
     implementation(libs.androidx.material.icons.extended)
 
+    implementation("com.android.volley:volley:1.2.1")
 
 
     testImplementation(libs.junit)
