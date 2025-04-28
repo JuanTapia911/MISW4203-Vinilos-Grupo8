@@ -1,6 +1,7 @@
 package com.example.vinilappteam8.network
 
 import android.content.Context
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -9,10 +10,12 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.vinilappteam8.models.Album
 import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 
 class NetworkServiceAdapter constructor(context: Context) {
     companion object{
-        const val BASE_URL= "https://backvynils-q6yc.onrender.com/"
+        const val BASE_URL= "http://13.218.47.221:3000/"
         var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
@@ -38,9 +41,36 @@ class NetworkServiceAdapter constructor(context: Context) {
             },
             {
                 onError(it)
+                Log.d("", it.message.toString())
             }))
     }
+
+    fun getAlbum(albumId:Int,onComplete:(resp:List<Album>)->Unit, onError: (error:VolleyError)->Unit){
+        requestQueue.add(getRequest("albums/$albumId", { response ->
+            try {
+                val item = JSONObject(response) // Usa JSONObject si esperas un solo objeto
+                val album = Album(
+                    albumId = item.getInt("id"),
+                    name = item.getString("name"),
+                    cover = item.getString("cover"),
+                    recordLabel = item.getString("recordLabel"),
+                    releaseDate = item.getString("releaseDate"),
+                    genre = item.getString("genre"),
+                    description = item.getString("description")
+                )
+                onComplete(listOf(album)) // Devuelve una lista con un solo álbum
+            } catch (e: JSONException) {
+                onError(VolleyError(e.message)) // Maneja cualquier error de JSON
+                Log.e("getAlbum", "Error parsing JSON", e)
+            }
+        }, { error ->
+            onError(error)
+            Log.d("getAlbum", "Error: ${error.message}")
+        }))
+    }
+
     private fun getRequest(path:String, responseListener: Response.Listener<String>, errorListener: Response.ErrorListener): StringRequest {
         return StringRequest(Request.Method.GET, BASE_URL+path, responseListener,errorListener)
     }
+
 }

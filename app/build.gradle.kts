@@ -54,7 +54,13 @@ dependencies {
 
     implementation(libs.androidx.material.icons.extended)
 
-    implementation("com.android.volley:volley:1.2.1")
+    implementation("com.android.volley:volley:1.2.0")
+    implementation(libs.androidx.runtime.livedata)
+    implementation("androidx.compose.ui:ui:1.3.0") // Jetpack Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1") // ViewModel para Compose
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("androidx.navigation:navigation-compose:2.6.0")
 
 
     testImplementation(libs.junit)
