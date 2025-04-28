@@ -53,8 +53,13 @@ dependencies {
 
 
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.ui.test.junit4.android)
 
-
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test:rules:1.5.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
