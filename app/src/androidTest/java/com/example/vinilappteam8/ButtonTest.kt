@@ -20,8 +20,8 @@ class GuestButtonTest {
             .assertIsDisplayed()
             .performClick()
 
-        // Verifica que se navega a la pantalla esperada
-        composeTestRule.onAllNodesWithTag("AlbumsViewTag")[0]
+        // Verifica que el título "VinilApp Team 8 Albums" está visible
+        composeTestRule.onNodeWithText("VinilApp Team 8 Albums")
             .assertIsDisplayed()
     }
 }

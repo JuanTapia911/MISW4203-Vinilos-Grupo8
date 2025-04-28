@@ -9,15 +9,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.vinilappteam8.models.Album
 import com.example.vinilappteam8.network.NetworkServiceAdapter
 
-class AlbumsViewModel(application: Application) :  AndroidViewModel(application)  {
+open class AlbumsViewModel(application: Application) : AndroidViewModel(application) {
     private val _albums = MutableLiveData<List<Album>>()
 
-    val albums: LiveData<List<Album>>
+    open val albums: LiveData<List<Album>>
         get() = _albums
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
 
-    val eventNetworkError: LiveData<Boolean>
+    open val eventNetworkError: LiveData<Boolean>
         get() = _eventNetworkError
 
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
