@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.vinilos"
+    namespace = "com.example.vinilappteam8"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.vinilos"
-        minSdk = 22
+        applicationId = "com.example.vinilappteam8"
+        minSdk = 21
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -28,11 +28,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.navigation.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -49,6 +50,26 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.ui.test.junit4.android)
+
+    implementation("com.android.volley:volley:1.2.0")
+    implementation(libs.androidx.runtime.livedata)
+    implementation("androidx.compose.ui:ui:1.3.0") // Jetpack Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1") // ViewModel para Compose
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("androidx.navigation:navigation-compose:2.6.0")
+    implementation(libs.androidx.navigation.testing)
+
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

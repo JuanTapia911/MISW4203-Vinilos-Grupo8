@@ -19,6 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Vinilos"
+rootProject.name = "VinilAppTeam8"
 include(":app")
- 
