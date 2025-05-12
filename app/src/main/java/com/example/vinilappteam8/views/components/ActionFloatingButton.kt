@@ -1,6 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
-package com.example.vinilappteam8.components
+package com.example.vinilappteam8.views.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -9,46 +7,28 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddBox
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.vinilappteam8.R
+import com.example.vinilappteam8.ui.theme.spot_black
+import com.example.vinilappteam8.ui.theme.spot_green
 
 
-@ExperimentalMaterial3Api
 @Composable
-fun ActionButton() {
+fun ActionFloatingButton() {
 
     var isExpanded by remember { mutableStateOf(false) }
     val rotationAngle by animateFloatAsState(
@@ -82,33 +62,16 @@ fun ActionButton() {
             onClick = { isExpanded = !isExpanded },
 
             shape = MaterialTheme.shapes.small,
-            containerColor = colorResource(R.color.spot_green),
-            contentColor = colorResource(R.color.black),
+            containerColor = spot_green,
+            contentColor = spot_black,
             modifier = Modifier.rotate(rotationAngle)
-            ) {
+        ) {
             Icon(
                 imageVector = if (isExpanded) Icons.Default.Close else Icons.Default.Add,
                 contentDescription = "Add Icon",
 
-            )
+                )
         }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewFabOption() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.End,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        FabOption("Add Album") {}
-        FabOption("Add Artist") {}
-        FabOption("Add Collection") {}
     }
 }
 
