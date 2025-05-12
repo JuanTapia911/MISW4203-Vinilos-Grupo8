@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="spot_black">#121212</color>
+    <color name="spot_green">#1ED760</color>
+    <color name="spot_light_black">#212121</color>
+    <color name="spot_gray">#535353</color>
+    <color name="spot_light_gray">#B3B3B3</color>
+    <color name="ic_launcher_background">#f4f3ef</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.vinilos.ui.theme
+package com.example.vinilappteam8.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -34,7 +34,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun VinilosTheme(
+fun VinilAppTeam8Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
