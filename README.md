@@ -16,6 +16,11 @@ Antes de compilar y ejecutar esta aplicación, asegúrate de tener:
 
 > Repositorio del backend: [https://github.com/TheSoftwareDesignLab/BackVynils.git](https://github.com/TheSoftwareDesignLab/BackVynils.git)
 
+### Ejecutar el Backend localmente en el puerto 3000 desde el Docker Compose y crear la variable de entorno BASE_URL con la URL a utilizar, o bien apuntar desde Android Studio a la direccion http://10.0.2.2:3000
+
+![image](https://github.com/user-attachments/assets/41c1738e-4bdb-426a-99e6-233b7f9f453c)
+
+
 ## Instrucciones para correr el backend
 
 1. Clona el repositorio:
