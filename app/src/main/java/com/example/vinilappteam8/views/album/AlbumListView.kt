@@ -1,11 +1,13 @@
 package com.example.vinilappteam8.views.album
 
+import android.graphics.fonts.FontStyle
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,8 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.example.vinilappteam8.ui.theme.*
@@ -36,11 +41,13 @@ fun AlbumListView(
     paddingValues: PaddingValues,
     onAlbumSelected: (Int) -> Unit
 ){
-    val albums by viewModel.albums.collectAsStateWithLifecycle()
-    val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
-    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val albums by viewModel.albums.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
-    VinilAppTeam8Theme(darkTheme = false, dynamicColor = false) {
+    /*LaunchedEffect(Unit) {
+        viewModel.fetchAlbumsWithPerformers()
+    }*/
 
         if (errorMessage != null) {
             Text(
@@ -52,19 +59,34 @@ fun AlbumListView(
 
         } else if (isLoading) {
 
-            CircularProgressIndicator(
-                modifier = Modifier.padding(paddingValues),
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ){
+
+                CircularProgressIndicator(
+                    modifier = Modifier.padding(paddingValues),
+                )
+            }
 
         } else {
 
             if(albums.isEmpty()) {
-                Text(
-                    modifier = Modifier.padding(paddingValues),
-                    text = "No albums found",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = spot_white
-                )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        modifier = Modifier.padding(paddingValues),
+                        text = "Loading...",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = spot_white
+                    )
+                    CircularProgressIndicator(
+                        modifier = Modifier.padding(paddingValues),
+                    )
+                }
             } else {
 
                 LazyColumn(
@@ -109,7 +131,9 @@ fun AlbumListView(
                                         modifier = Modifier.padding(bottom = 5.dp),
                                         text = album.album.genre?:"",
                                         style = MaterialTheme.typography.bodyLarge,
-                                        color = spot_gray
+                                        color = spot_light_gray,
+                                        fontWeight = FontWeight.Bold,
+                                        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
                                     )
                                     Text(
                                         modifier = Modifier.padding(bottom = 10.dp),
@@ -124,5 +148,5 @@ fun AlbumListView(
                 }
             }
         }
-    }
+
 }

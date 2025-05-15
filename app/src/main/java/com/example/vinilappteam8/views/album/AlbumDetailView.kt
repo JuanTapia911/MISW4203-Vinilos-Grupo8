@@ -1,9 +1,11 @@
 package com.example.vinilappteam8.views.album
 
+import android.util.Log
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -35,10 +37,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import com.example.vinilappteam8.ui.theme.VinilAppTeam8Theme
+import com.example.vinilappteam8.ui.theme.AppTheme
 import com.example.vinilappteam8.ui.theme.spot_green
 import com.example.vinilappteam8.ui.theme.spot_white
 import com.example.vinilappteam8.viewmodels.album.AlbumDetailViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Preview(showBackground = true)
 @Composable
@@ -62,7 +66,17 @@ fun AlbumDetailView(
         viewModel.getAlbumById(albumId)
     }
 
-    VinilAppTeam8Theme(darkTheme = true) {
+    val formattedReleaseDate = currentAlbum?.album?.releaseDate?.let {
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        formatter.timeZone = java.util.TimeZone.getTimeZone("UTC")
+        formatter.parse(it)?.let { date ->
+            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
+        }
+    }
+
+    Log.d("AlbumDetailView", "Formatted Release Date: $formattedReleaseDate")
+
+    AppTheme(darkTheme = true, dynamicColor = false) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -84,27 +98,34 @@ fun AlbumDetailView(
                 model = currentAlbum?.album?.cover ?:"https://placehold.co/100x100/white/black?text=AlbumCover",
                 contentDescription = "Album Cover",
                 contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.padding(12.dp).fillMaxWidth()
             )
             Text(
-                text = currentAlbum?.performers?.joinToString(separator = ","){ it.name.toString()} ?: "No Performers",
+                text = ("Artista / Banda: " + currentAlbum?.performers?.joinToString(separator = ",") { it.name.toString() }),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
-                    .padding(innerPadding)
+                    .padding(12.dp)
                     .fillMaxWidth()
             )
             Text(
-                text = currentAlbum?.album?.genre ?: "No Genre",
+                text = ("Genero: " + currentAlbum?.album?.genre),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
-                    .padding(innerPadding)
+                    .padding(12.dp)
                     .fillMaxWidth()
             )
             Text(
-                text = currentAlbum?.album?.description ?: "No Description",
+                text = "Fecha Lanzamiento: $formattedReleaseDate",
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
-                    .padding(innerPadding)
+                    .padding(12.dp)
+                    .fillMaxWidth()
+            )
+            Text(
+                text = ("Descripcion: " + currentAlbum?.album?.description),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier
+                    .padding(12.dp)
                     .fillMaxWidth()
             )
             Button(
@@ -117,11 +138,18 @@ fun AlbumDetailView(
                     disabledContentColor = MaterialTheme.colorScheme.secondary,
                 )
             ){
-                Text(
-                    text = "Volver",
-                    fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                    color = spot_white
-                )
+                Row {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                    Text(
+                        text = "Volver",
+                        fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
             }
         }
     }

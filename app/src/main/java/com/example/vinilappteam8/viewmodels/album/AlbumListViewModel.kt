@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,13 +30,14 @@ class AlbumListViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage = _errorMessage.asStateFlow()
 
-    init {
+   init {
+       fetchAlbumsWithPerformers()
+   }
 
-        fetchAlbumsWithPerformers()
-    }
+    fun fetchAlbumsWithPerformers() {
 
+        if(_albums.value.isNotEmpty()) return
 
-    private fun fetchAlbumsWithPerformers() {
         viewModelScope.launch {
 
             _isLoading.value = true
@@ -42,9 +45,9 @@ class AlbumListViewModel @Inject constructor(
 
             try {
 
-                albumRepository.getAlbumWithPerformers().collectLatest { list ->
-                    _albums.value = list
-                }
+                val fetchedAlbums = albumRepository.getAlbumWithPerformers().first()
+                _albums.value = fetchedAlbums
+
 
             } catch (e: Exception) {
 

@@ -1,5 +1,6 @@
 package com.example.vinilappteam8.views
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,22 +16,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.vinilappteam8.ui.theme.VinilAppTeam8Theme
+import com.example.vinilappteam8.ui.theme.AppTheme
 import com.example.vinilappteam8.ui.theme.spot_gray
 import com.example.vinilappteam8.ui.theme.spot_green
 import com.example.vinilappteam8.ui.theme.spot_white
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun WelcomeViewPreview() {
-    WelcomeView() {}
+    AppTheme(darkTheme = true) {
+        WelcomeView() {}
+    }
 }
 
 
 @Composable
 fun WelcomeView(onNavigate: (String) -> Unit) {
-    VinilAppTeam8Theme(darkTheme = true) {
+
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,6 +73,6 @@ fun WelcomeView(onNavigate: (String) -> Unit) {
                 )
             }
         }
-    }
+
 
 }

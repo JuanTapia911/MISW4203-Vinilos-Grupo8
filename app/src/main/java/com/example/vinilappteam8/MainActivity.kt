@@ -4,26 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LibraryMusic
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.vinilappteam8.navigation.NavManager
-import com.example.vinilappteam8.ui.theme.VinilAppTeam8Theme
-import com.example.vinilappteam8.ui.theme.spot_black
-import com.example.vinilappteam8.ui.theme.spot_white
-import com.example.vinilappteam8.views.WelcomeView
-import com.example.vinilappteam8.views.components.ActionFloatingButton
-import com.example.vinilappteam8.views.components.NavigationBarComponent
+import com.example.vinilappteam8.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +20,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            VinilAppTeam8Theme(darkTheme = true) {
+
+            val navController = rememberNavController()
+            val viewModel = hiltViewModel<MainViewModel>()
+
+            AppTheme(dynamicColor = false, darkTheme = true) {
+                NavManager(navController = navController, viewModel = viewModel)
+            }
+
+            /*VinilAppTeam8Theme(darkTheme = true, dinamycColor=false) {
 
                 var showTopAppBar by rememberSaveable { mutableStateOf(true) }
                 var showBottomAppBar by rememberSaveable { mutableStateOf(true) }
@@ -129,7 +122,7 @@ class MainActivity : ComponentActivity() {
 
                     }
                 }
-            }
+            }*/
 
 
 
