@@ -1,4 +1,4 @@
-package com.example.vinilappteam8.components
+package com.example.vinilappteam8.views.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CollectionsBookmark
@@ -13,13 +13,9 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import com.example.vinilappteam8.ui.theme.*
 
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.vinilappteam8.ui.theme.VinilAppTeam8Theme
-import com.example.vinilappteam8.R
 
-@Preview(showBackground = true)
 @Composable
 fun NavigationBarComponent(selectedItem: String, onSelectedItem:(String) -> Unit = {}) {
 
@@ -34,8 +30,8 @@ fun NavigationBarComponent(selectedItem: String, onSelectedItem:(String) -> Unit
 
     VinilAppTeam8Theme(darkTheme = true) {
         NavigationBar(
-            containerColor = colorResource(R.color.spot_black),
-            contentColor = colorResource(R.color.white),
+            containerColor = spot_black,
+            contentColor = spot_white,
         ) {
             items.forEachIndexed { index, item ->
                 NavigationBarItem(
@@ -49,16 +45,16 @@ fun NavigationBarComponent(selectedItem: String, onSelectedItem:(String) -> Unit
                     selected = selectedIndex == index,
                     onClick =  { selectedIndex = index; onSelectedItem(item) },
                     colors = NavigationBarItemColors(
-                        selectedIndicatorColor = colorResource(R.color.spot_green),
-                        selectedIconColor = colorResource(R.color.white),
-                        selectedTextColor = colorResource(R.color.white),
-                        unselectedIconColor = colorResource(R.color.spot_gray),
-                        unselectedTextColor = colorResource(R.color.spot_gray),
-                        disabledIconColor = colorResource(R.color.spot_gray),
-                        disabledTextColor = colorResource(R.color.spot_gray)
+                        selectedIndicatorColor = spot_green,
+                        selectedIconColor = spot_white,
+                        selectedTextColor = spot_white,
+                        unselectedIconColor = spot_gray,
+                        unselectedTextColor = spot_gray,
+                        disabledIconColor = spot_gray,
+                        disabledTextColor = spot_gray
                     )
 
-                    )
+                )
             }
         }
     }

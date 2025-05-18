@@ -4,12 +4,10 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.performClick
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.testing.TestNavHostController
+
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.vinilappteam8.models.Album
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.unit.dp
-import com.example.vinilappteam8.viewmodels.AlbumsViewModel
 import com.example.vinilappteam8.views.AlbumsView
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Rule

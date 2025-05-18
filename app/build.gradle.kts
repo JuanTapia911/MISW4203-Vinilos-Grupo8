@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -51,24 +53,42 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    implementation(libs.androidx.material.icons.extended) //
 
-    implementation(libs.androidx.material.icons.extended)
-    implementation(libs.androidx.junit.ktx)
-    implementation(libs.androidx.espresso.core)
-    implementation(libs.androidx.ui.test.junit4.android)
-
-    implementation("com.android.volley:volley:1.2.0")
+    //viewmodel and livedata
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.runtime.livedata)
-    implementation("androidx.compose.ui:ui:1.3.0") // Jetpack Compose
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1") // ViewModel para Compose
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
-    implementation("io.coil-kt:coil-compose:2.2.2")
-    implementation("androidx.navigation:navigation-compose:2.6.0")
-    implementation(libs.androidx.navigation.testing)
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.test:rules:1.5.0")
+    //icons and navigation
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.navigation.compose)
+
+    //retrofit, coil and OkHttp3
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor) //okhttp3 logging interceptor
+    implementation(libs.coil.compose)
+    implementation(libs.coil.compose.network) //coil3 okhttp3 integration
+
+    //dagger hilt
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose) //IMPORTANT
+    ksp(libs.hilt.android.compiler)
+
+    //room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+
+    //implementation(libs.androidx.ui.test.junit4.android)
+    //implementation(libs.androidx.navigation.testing)
+    //implementation(libs.androidx.junit.ktx)
+
+    //androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    //androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    //androidTestImplementation("androidx.test:rules:1.5.0")
+    androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.ui.test.manifest)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
