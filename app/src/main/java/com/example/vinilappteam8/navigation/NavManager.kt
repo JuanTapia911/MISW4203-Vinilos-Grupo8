@@ -2,19 +2,23 @@ package com.example.vinilappteam8.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.*
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.vinilappteam8.MainViewModel
-import com.example.vinilappteam8.ui.theme.AppTheme
+import com.example.vinilappteam8.viewmodels.MainViewModel
 import com.example.vinilappteam8.viewmodels.album.AlbumDetailViewModel
 import com.example.vinilappteam8.viewmodels.album.AlbumListViewModel
+import com.example.vinilappteam8.viewmodels.artist.ArtistListViewModel
 import com.example.vinilappteam8.views.WelcomeView
 import com.example.vinilappteam8.views.album.AlbumDetailView
 import com.example.vinilappteam8.views.album.AlbumListView
+import com.example.vinilappteam8.views.artist.ArtistListView
 import com.example.vinilappteam8.views.components.ScaffoldComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,31 +30,70 @@ fun NavManager(
 
     val uiState by viewModel.currentState.collectAsState()
 
-    NavHost(navController = navController, startDestination = if(uiState.isInitialScreenVisible) "Welcome" else "Albums") {
+    val albumViewModel = hiltViewModel<AlbumListViewModel>()
+    val albumDetailViewModel = hiltViewModel<AlbumDetailViewModel>()
+
+    val artistViewModel = hiltViewModel<ArtistListViewModel>()
+
+
+    NavHost(navController = navController, startDestination = "Welcome") {
 
         composable("Welcome") {
 
-            WelcomeView(onNavigate = { navController.navigate("Albums") })
+            WelcomeView(
+                onNavigate = {
+                    viewModel.updateInitialScreen(false)
+                    navController.navigate("Albums")
+                }
+            )
         }
 
-        composable("Albums") {
+        composable("Artists") {
 
-            var albumViewModel = hiltViewModel<AlbumListViewModel>()
+            viewModel.updateTitle("VinilApp Team 8 - ${it.destination.route}")
+            viewModel.updateSelectedNavItem("Artists")
 
             ScaffoldComponent(
                 selectedItem = uiState.selectedNavItem,
                 currentTitle = uiState.currentTitle,
                 onNavigate = {
-                    viewModel.updateTitle("VinilApp Team 8 - $it")
-                    viewModel.updateSelectedNavItem(it)
-                    //navController.navigate(it)
+
+                    if(it == "Artists") {
+                        return@ScaffoldComponent
+                    } else {
+                        navController.navigate(it)
+                    }
+
+                }) {
+                    ArtistListView(
+                        viewModel = artistViewModel,
+                        paddingValues = it,
+                        onArtistSelected = { }
+                    )
+                }
+        }
+
+        composable("Albums") {
+
+            viewModel.updateTitle("VinilApp Team 8 - ${it.destination.route}")
+            viewModel.updateSelectedNavItem("Albums")
+
+            ScaffoldComponent(
+                selectedItem = uiState.selectedNavItem,
+                currentTitle = uiState.currentTitle,
+                onNavigate = {
+
+                    if(it == "Albums") {
+                        return@ScaffoldComponent
+                    } else {
+                        navController.navigate(it)
+                    }
             }) {
                 // Content for Albums screen
                 AlbumListView(
                     viewModel = albumViewModel,
                     paddingValues = it,
                     onAlbumSelected = { albumId ->
-                        // Handle album selection
                         navController.navigate("AlbumDetails/$albumId")
                     }
                 )
@@ -61,12 +104,11 @@ fun NavManager(
         composable("AlbumDetails/{albumId}") { backStackEntry ->
 
             val albumId = backStackEntry.arguments?.getString("albumId")?.toIntOrNull()
-            val viewModel = hiltViewModel<AlbumDetailViewModel>()
 
             if (albumId != null) {
 
                 AlbumDetailView(
-                    viewModel = viewModel,
+                    viewModel = albumDetailViewModel,
                     innerPadding = PaddingValues(0.dp),
                     albumId = albumId,
                     onBackNavigation = {
@@ -74,7 +116,7 @@ fun NavManager(
                     }
                 )
             }
-
         }
+
     }
 }

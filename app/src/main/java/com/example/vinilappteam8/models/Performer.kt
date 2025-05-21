@@ -7,6 +7,5 @@ data class Performer (
     val description: String?,
     val birthDate: String?,
     val creationDate: String?,
-    val type: String?,
-    val albums: List<Album>?
+    var type: String? = "Musician"
 )

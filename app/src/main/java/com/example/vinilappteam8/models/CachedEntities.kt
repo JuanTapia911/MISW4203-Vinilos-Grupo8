@@ -28,7 +28,7 @@ data class CachedPerformer(
     val description: String?,
     val birthDate: String?,
     val creationDate: String?,
-    val type: String?,
+    val type: String? = "Musician",
     val timestamp: Long = System.currentTimeMillis()
 )
 

@@ -1,4 +1,4 @@
-package com.example.vinilappteam8
+package com.example.vinilappteam8.viewmodels
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,6 +37,4 @@ class MainViewModel @Inject constructor(): ViewModel() {
             currentState.copy(isInitialScreenVisible = newValue)
         }
     }
-
-
 }

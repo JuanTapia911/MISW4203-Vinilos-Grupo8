@@ -13,9 +13,15 @@ interface HttpService {
     @GET("/albums/{id}")
     suspend fun getAlbumById(@Path("id") id: Int): Album
 
-    @GET("/artists")
+    @GET("/musicians")
     suspend fun getArtists(): List<Performer>
 
-    @GET("/artists/{id}")
+    @GET("/musicians/{id}")
     suspend fun getArtistById(@Path("id") id: Int): Performer
+
+    @GET("/bands")
+    suspend fun getBands(): List<Performer>
+
+    @GET("/bands/{id}")
+    suspend fun getBandById(@Path("id") id: Int): Performer
 }

@@ -3,16 +3,13 @@ package com.example.vinilappteam8.viewmodels.album
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.vinilappteam8.models.Album
 import com.example.vinilappteam8.models.CachedAlbumWithPerformers
 import com.example.vinilappteam8.repository.AlbumRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,6 +28,7 @@ class AlbumListViewModel @Inject constructor(
     val errorMessage = _errorMessage.asStateFlow()
 
    init {
+       Log.d("AlbumListViewModel", "init Block called")
        fetchAlbumsWithPerformers()
    }
 
@@ -47,7 +45,6 @@ class AlbumListViewModel @Inject constructor(
 
                 val fetchedAlbums = albumRepository.getAlbumWithPerformers().first()
                 _albums.value = fetchedAlbums
-
 
             } catch (e: Exception) {
 

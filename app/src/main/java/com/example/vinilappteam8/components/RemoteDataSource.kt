@@ -19,6 +19,10 @@ class RemoteDataSource @Inject constructor(private val httpService: HttpService)
 
     suspend fun getAlbums(): List<Album> = httpService.getAlbums()
     suspend fun getAlbum(id: Int): Album = httpService.getAlbumById(id)
+
+    suspend fun getBands(): List<Performer> = httpService.getBands()
+    suspend fun getBand(id: Int): Performer = httpService.getBandById(id)
+
     suspend fun getArtists(): List<Performer> = httpService.getArtists()
     suspend fun getArtist(id: Int): Performer = httpService.getArtistById(id)
 

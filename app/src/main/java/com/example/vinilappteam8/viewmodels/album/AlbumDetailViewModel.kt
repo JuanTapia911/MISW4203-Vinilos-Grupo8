@@ -2,8 +2,6 @@ package com.example.vinilappteam8.viewmodels.album
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.vinilappteam8.models.Album
-import com.example.vinilappteam8.models.CachedAlbum
 import com.example.vinilappteam8.models.CachedAlbumWithPerformers
 import com.example.vinilappteam8.repository.AlbumRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

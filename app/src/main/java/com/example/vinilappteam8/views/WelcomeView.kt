@@ -26,7 +26,7 @@ import com.example.vinilappteam8.ui.theme.spot_white
 @Composable
 fun WelcomeViewPreview() {
     AppTheme(darkTheme = true) {
-        WelcomeView() {}
+        WelcomeView {}
     }
 }
 

@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="VinilAppTeam8.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-05-15T22:32:41.621627Z">
+        <DropdownSelection timestamp="2025-05-18T02:42:50.377900Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=/Users/andres/.android/avd/Pixel_6a.avd" />
