@@ -6,7 +6,9 @@ import com.example.vinilappteam8.models.dao.PerformerDao
 import com.example.vinilappteam8.models.CachedAlbum
 import com.example.vinilappteam8.models.CachedAlbumPerformersCrossRef
 import com.example.vinilappteam8.models.CachedAlbumWithPerformers
+import com.example.vinilappteam8.models.CachedCollector
 import com.example.vinilappteam8.models.CachedPerformer
+import com.example.vinilappteam8.models.dao.CollectorDao
 import javax.inject.Inject
 import kotlin.collections.forEach
 
@@ -20,7 +22,8 @@ import kotlin.collections.forEach
 
 class LocalDataSource @Inject constructor(
     private val albumDao: AlbumDao,
-    private val performerDao: PerformerDao
+    private val performerDao: PerformerDao,
+    private val collectorDao: CollectorDao
 ) {
 
     private val TAG = "LocalDataSource" //para el Log
@@ -65,6 +68,19 @@ class LocalDataSource @Inject constructor(
         albumWithPerformers.forEach { albumWithPerformer ->
             albumDao.insertAll(listOf(albumWithPerformer.album))
             performerDao.insertAll(albumWithPerformer.performers)
+        }
+    }
+
+    suspend fun getCachedCollectors(timestamp: Long): List<CachedCollector> {
+        Log.d(TAG, "Fetching cached collectors with performers from local database")
+        return collectorDao.getCachedCollectors(timestamp)
+    }
+
+    suspend fun insertCollector(collector: List<CachedCollector>) {
+        Log.d(TAG, "Inserting collector  into local database")
+
+        collector.forEach { refactor ->
+            collectorDao.insertAll(listOf(refactor))
         }
     }
 

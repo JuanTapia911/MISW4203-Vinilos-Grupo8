@@ -12,11 +12,12 @@ import com.example.vinilappteam8.models.dao.*
  * Extiende de RoomDatabase y se agregan las funciones relacionadas a cada DAO en la aplicacion
  */
 @Database(
-    entities = [CachedAlbum::class, CachedPerformer::class, CachedAlbumPerformersCrossRef::class],
-    version = 1,
+    entities = [CachedAlbum::class, CachedPerformer::class, CachedAlbumPerformersCrossRef::class, CachedCollector::class],
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun AlbumDao(): AlbumDao
     abstract fun PerformerDao(): PerformerDao
+    abstract fun CollectorDao(): CollectorDao
 }

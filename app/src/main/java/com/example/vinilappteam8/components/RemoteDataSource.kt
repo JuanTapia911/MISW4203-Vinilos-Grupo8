@@ -1,6 +1,7 @@
 package com.example.vinilappteam8.components
 
 import com.example.vinilappteam8.models.Album
+import com.example.vinilappteam8.models.Collector
 import com.example.vinilappteam8.models.Performer
 import com.example.vinilappteam8.services.HttpService
 import javax.inject.Inject
@@ -21,5 +22,5 @@ class RemoteDataSource @Inject constructor(private val httpService: HttpService)
     suspend fun getAlbum(id: Int): Album = httpService.getAlbumById(id)
     suspend fun getArtists(): List<Performer> = httpService.getArtists()
     suspend fun getArtist(id: Int): Performer = httpService.getArtistById(id)
-
+    suspend fun getCollectors(): List<Collector> = httpService.getCollectors()
 }

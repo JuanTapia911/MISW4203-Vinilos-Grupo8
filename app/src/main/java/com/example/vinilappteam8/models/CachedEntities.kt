@@ -87,11 +87,11 @@ data class CachedPerformerWithAlbums(
 
 @Entity(tableName = "collector")
 data class CachedCollector(
-
     @PrimaryKey val id: Int,
     val name: String?,
     val telephone: String?,
     val email: String?,
+    val timestamp: Long = System.currentTimeMillis()
 )
 
 
