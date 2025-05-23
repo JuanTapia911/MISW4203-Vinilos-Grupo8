@@ -84,6 +84,12 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+    suspend fun getCachedCollectorById(id: Int): CachedCollector? {
+
+        Log.d(TAG, "Fetching cached collector with id: $id from local database")
+        return collectorDao.getCollectorById(id)
+    }
+
     /**
      * Esta funcion se encarga de insertar una referencia cruzada entre un album y sus artistas en la base de datos local.
      */

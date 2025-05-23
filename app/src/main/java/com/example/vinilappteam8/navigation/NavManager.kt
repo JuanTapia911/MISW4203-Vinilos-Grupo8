@@ -13,9 +13,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.vinilappteam8.viewmodels.album.AlbumDetailViewModel
 import com.example.vinilappteam8.viewmodels.album.AlbumListViewModel
+import com.example.vinilappteam8.viewmodels.collectors.CollectorDetailViewModel
 import com.example.vinilappteam8.viewmodels.collectors.CollectorListViewModel
 import com.example.vinilappteam8.views.album.AlbumDetailView
 import com.example.vinilappteam8.views.album.AlbumListView
+import com.example.vinilappteam8.views.collector.CollectorDetailView
 import com.example.vinilappteam8.views.collector.CollectorListView
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,8 +83,23 @@ fun NavManager(
                 paddingValues = innerPadding,
                 onCollectorSelected = { collectorId ->
                     onChangeRouteNavigation(false, false)
-                    navController.navigate("Collectors/$collectorId")
+                    navController.navigate("collectorDetail/$collectorId")
                     Log.d("NavManager", "Collector selected: $collectorId")
+                }
+            )
+        }
+
+        composable("collectorDetail/{collectorId}") { backStackEntry ->
+
+            val collectorId = backStackEntry.arguments?.getString("collectorId")?.toInt() ?: 0
+            val viewModel = hiltViewModel<CollectorDetailViewModel>()
+
+            CollectorDetailView(
+                collectorId = collectorId,
+                viewModel = viewModel,
+                innerPadding = innerPadding,
+                onBackNavigation = {
+                    onChangeRouteNavigation(true, true)
                 }
             )
         }

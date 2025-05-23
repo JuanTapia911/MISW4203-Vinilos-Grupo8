@@ -5,6 +5,7 @@ import com.example.vinilappteam8.components.LocalDataSource
 import com.example.vinilappteam8.components.RemoteDataSource
 import com.example.vinilappteam8.models.CachedCollector
 import com.example.vinilappteam8.models.Collector
+import com.example.vinilappteam8.models.toCached
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -49,6 +50,9 @@ class CollectorRepository @Inject constructor(
                     name = it.name,
                     email = it.email,
                     telephone = it.telephone,
+                    collectorAlbums = it.collectorAlbums,
+                    comments = it.comments,
+                    favoritePerformers = it.favoritePerformers,
                 )
             }
 
@@ -69,12 +73,12 @@ class CollectorRepository @Inject constructor(
 
     }.flowOn(Dispatchers.IO)
 
-    /*fun getAlbum(id: Int): Flow<CachedCollectorWithPerformers?> = flow {
+    fun getCollector(id: Int): Flow<CachedCollector?> = flow {
 
-        val cachedAlbum = localDataSource.getCachedAlbumById(id)
-        if (cachedAlbum != null) {
-            Log.d(TAG, "Cached album found: $cachedAlbum")
-            emit(cachedAlbum)
+        val cachedCollector = localDataSource.getCachedCollectorById(id)
+        if (cachedCollector != null) {
+            Log.d(TAG, "Cached album found: $cachedCollector")
+            emit(cachedCollector)
         } else {
             Log.d(TAG, "No cached album found")
         }
@@ -82,15 +86,9 @@ class CollectorRepository @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
 
-     */
-    private fun CachedCollector.toDomain(): Collector = Collector(
-        id,
-        name.toString(),
-        email.toString(),
-        telephone.toString(),
-    )
 
-    private fun Collector.toCached(): CachedCollector = CachedCollector(
-        id, name, email, telephone
-    )
+
+
+
+
 }

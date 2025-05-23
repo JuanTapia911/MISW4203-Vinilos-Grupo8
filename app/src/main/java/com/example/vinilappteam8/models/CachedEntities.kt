@@ -91,8 +91,49 @@ data class CachedCollector(
     val name: String?,
     val telephone: String?,
     val email: String?,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = System.currentTimeMillis(),
+    val collectorAlbums: List<CollectorAlbum>,
+    val comments: List<Comment>,
+    val favoritePerformers: List<Performers>
 )
 
+@Entity(tableName = "collector_album")
+data class CachedCollectorAlbum(
+    @PrimaryKey val id: Int,
+    val price: Int,
+    val status: String
+)
+@Entity(tableName = "comment")
+data class CachedComment(
+    @PrimaryKey val id: Int,
+    val description: String,
+    val rating: Int
+)
+
+@Entity(tableName = "performer")
+data class CachedPerformers(
+    @PrimaryKey val id: Int,
+    val name: String,
+    val description: String,
+    val birthDate: String, // Para simplificar guarda la fecha como String (ISO8601)
+    val image: String?
+)
+// En un archivo como MapperExtensions.kt (fuera de CollectorRepository)
+
+
+fun CollectorAlbum.toCached() = CachedCollectorAlbum(id, price, status)
+
+fun Comment.toCached() = CachedComment(id, description, rating)
+
+
+fun Performers.toCached() = CachedPerformers(id, name, description, birthDate, image)
+
+fun CachedCollectorAlbum.toDomain() = CollectorAlbum(id, price, status)
+
+fun CachedComment.toDomain() = Comment(id   , description, rating)
+
+fun CachedPerformer.toDomain() = Performers(id, name.toString(),
+    description.toString(), birthDate.toString(), image.toString()
+)
 
 

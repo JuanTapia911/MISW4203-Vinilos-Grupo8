@@ -2,6 +2,7 @@ package com.example.vinilappteam8.components
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
 import com.example.vinilappteam8.models.*
 import com.example.vinilappteam8.models.dao.*
@@ -13,9 +14,10 @@ import com.example.vinilappteam8.models.dao.*
  */
 @Database(
     entities = [CachedAlbum::class, CachedPerformer::class, CachedAlbumPerformersCrossRef::class, CachedCollector::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun AlbumDao(): AlbumDao
     abstract fun PerformerDao(): PerformerDao

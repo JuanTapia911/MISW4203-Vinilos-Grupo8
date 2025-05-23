@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.example.vinilappteam8.models.CachedAlbumWithPerformers
 import com.example.vinilappteam8.models.CachedCollector
 
 @Dao
@@ -17,4 +18,6 @@ interface CollectorDao {
     @Query("SELECT * FROM collector WHERE timestamp >= :timestamp")
     suspend fun getCachedCollectors(timestamp: Long): List<CachedCollector>
 
+    @Query("SELECT * FROM collector WHERE id = :id")
+    suspend fun getCollectorById(id: Int): CachedCollector?
 }
