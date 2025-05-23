@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                     selectedNavItem = when (destination.route) {
                         "Albums" -> "Albums"
                         "Artists" -> "Artists"
-                        "Collections" -> "Collections"
+                        "Collectors" -> "Collectors"
                         else -> selectedNavItem
                     }
                     currentTitle = "VinilApp Team 8 - $selectedNavItem"
@@ -109,7 +109,7 @@ class MainActivity : ComponentActivity() {
                                         when (it) {
                                             "Albums" -> navController.navigate("Albums")
                                             "Artists" -> navController.navigate("Artists")
-                                            "Collections" -> navController.navigate("Collections")
+                                            "Collectors" -> navController.navigate("Collectors")
                                         }
                                     }
                                 )

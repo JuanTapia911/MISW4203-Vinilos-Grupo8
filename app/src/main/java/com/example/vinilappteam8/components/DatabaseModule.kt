@@ -35,10 +35,11 @@ object DatabaseModule {
         Log.d("DatabaseModule", "provideAppDatabase called")
 
         return Room.databaseBuilder(
-            context.applicationContext,
-            AppDatabase::class.java,
-            "app_database"
-        ).build()
+                context.applicationContext,
+                AppDatabase::class.java,
+                "app_database"
+
+            ).fallbackToDestructiveMigration(false).build()
 
     }
 
@@ -60,5 +61,10 @@ object DatabaseModule {
     @Provides
     fun provideArtistDao(database: AppDatabase): PerformerDao {
         return database.PerformerDao()
+    }
+
+    @Provides
+    fun provideCollectorDao(database: AppDatabase): CollectorDao {
+        return database.CollectorDao()
     }
 }

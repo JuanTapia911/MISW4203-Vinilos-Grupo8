@@ -13,8 +13,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.vinilappteam8.viewmodels.album.AlbumDetailViewModel
 import com.example.vinilappteam8.viewmodels.album.AlbumListViewModel
+import com.example.vinilappteam8.viewmodels.collectors.CollectorDetailViewModel
+import com.example.vinilappteam8.viewmodels.collectors.CollectorListViewModel
 import com.example.vinilappteam8.views.album.AlbumDetailView
 import com.example.vinilappteam8.views.album.AlbumListView
+import com.example.vinilappteam8.views.collector.CollectorDetailView
+import com.example.vinilappteam8.views.collector.CollectorListView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +47,6 @@ fun NavManager(
                 }
             )
         }
-        composable("Collections") { CollectionsView(innerPadding) }
         composable("Artists") { ArtistView(innerPadding)}
         /*composable("Artists/{id}",
             arguments = listOf(
@@ -72,6 +75,34 @@ fun NavManager(
                 }
             )
         }
+
+        composable("Collectors") {
+            val viewModel = hiltViewModel<CollectorListViewModel>()
+            CollectorListView (
+                viewModel = viewModel,
+                paddingValues = innerPadding,
+                onCollectorSelected = { collectorId ->
+                    onChangeRouteNavigation(false, false)
+                    navController.navigate("collectorDetail/$collectorId")
+                    Log.d("NavManager", "Collector selected: $collectorId")
+                }
+            )
+        }
+
+        composable("collectorDetail/{collectorId}") { backStackEntry ->
+
+            val collectorId = backStackEntry.arguments?.getString("collectorId")?.toInt() ?: 0
+            val viewModel = hiltViewModel<CollectorDetailViewModel>()
+
+            CollectorDetailView(
+                collectorId = collectorId,
+                viewModel = viewModel,
+                innerPadding = innerPadding,
+                onBackNavigation = {
+                    onChangeRouteNavigation(true, true)
+                }
+            )
+        }
     }
 }
 @Composable
@@ -81,6 +112,6 @@ fun ArtistView(x0: PaddingValues) {
 }
 
 @Composable
-fun CollectionsView(x0: PaddingValues) {
-    Text("CollectionsView",modifier = Modifier.padding(x0))
+fun CollectorsView(x0: PaddingValues) {
+    Text("CollectorsView",modifier = Modifier.padding(x0))
 }

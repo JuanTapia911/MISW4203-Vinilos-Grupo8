@@ -30,7 +30,7 @@ object NetworkModule {
     // URL base para las peticiones a la API
     // Se puede configurar a través de una variable de entorno o se usara el valor por defecto del
     // localhost (10.0.2.2 desde el emulador de Android)
-    private var BASE_URL = System.getenv("BASE_URL")?: "http://10.0.2.2:3000"
+    private var BASE_URL = System.getenv("BASE_URL")?: "http://13.218.64.48:3000/"
 
     /**
      * Proporciona una instancia de OkHttpClient.
