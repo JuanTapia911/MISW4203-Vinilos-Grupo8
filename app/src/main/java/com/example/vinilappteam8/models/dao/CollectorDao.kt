@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.vinilappteam8.models.CachedAlbumWithPerformers
 import com.example.vinilappteam8.models.CachedCollector
 
 @Dao
