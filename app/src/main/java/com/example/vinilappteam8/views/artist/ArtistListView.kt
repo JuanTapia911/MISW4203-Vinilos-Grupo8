@@ -89,7 +89,12 @@ fun ArtistListView(
             ) {
                 items(items = artists, key = { it.id }) { artist ->
 
-                    Log.d("ArtistListView", "Artist: $artist")
+                    //Log.d("ArtistListView", "Artist: $artist")
+                    if(artist.type == null) {
+                        Log.d("ArtistListView", "Artist type is null")
+                    } else {
+                        Log.d("ArtistListView", "Artist type: ${artist.type}")
+                    }
 
                     Card(
                         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),

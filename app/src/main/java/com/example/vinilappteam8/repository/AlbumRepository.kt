@@ -59,7 +59,7 @@ class AlbumRepository @Inject constructor(
                             description = it.description,
                             birthDate = it.birthDate,
                             creationDate = it.creationDate,
-                            type = it.type
+                            type = if(it.birthDate == null) "Band" else "Musician"
                         )
                     } ?: emptyList()
                 )

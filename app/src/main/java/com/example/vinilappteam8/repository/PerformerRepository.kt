@@ -22,10 +22,11 @@ class PerformerRepository @Inject constructor(
         val cachedArtists = localDataSource.getCachedPerformers().map { it.toDomain() }
 
         if (cachedArtists.isNotEmpty()) {
+            Log.d("PerformerRepository", "Returning cached artists: $cachedArtists")
             emit(cachedArtists)
         }
 
-        try {
+        /*try {
 
             Log.d("PerformerRepository", "Fetching artists from remote data source")
 
@@ -48,7 +49,7 @@ class PerformerRepository @Inject constructor(
             if (cachedArtists.isEmpty()) {
                 throw e
             }
-        }
+        }*/
 
     }.flowOn(Dispatchers.IO)
 
