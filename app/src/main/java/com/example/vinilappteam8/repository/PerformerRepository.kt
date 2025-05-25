@@ -17,13 +17,16 @@ class PerformerRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) {
-    fun getArtists(): Flow<List<Performer>> = flow {
+    fun getArtists(): Flow<List<CachedPerformer>> = flow {
 
-        val cachedArtists = localDataSource.getCachedPerformers().map { it.toDomain() }
+        val cachedArtists = localDataSource.getCachedPerformers()//.map { it.toDomain() }
 
         if (cachedArtists.isNotEmpty()) {
             Log.d("PerformerRepository", "Returning cached artists: $cachedArtists")
             emit(cachedArtists)
+        } else {
+            Log.d("PerformerRepository", "No cached artists found")
+            emit(emptyList())
         }
 
         /*try {
@@ -53,12 +56,12 @@ class PerformerRepository @Inject constructor(
 
     }.flowOn(Dispatchers.IO)
 
-    fun getArtist(id: Int): Flow<Performer> = flow {
+    fun getArtist(id: Int): Flow<CachedPerformer> = flow {
 
-        val cachedArtist = localDataSource.getCachedPerformerById(id)?.toDomain()
+        val cachedArtist = localDataSource.getCachedPerformerById(id)
         cachedArtist?.let { emit(it) }
 
-        try {
+        /*try {
 
             val remoteArtist = remoteDataSource.getArtist(id)
             localDataSource.insertPerformer(listOf(remoteArtist.toCached()))
@@ -68,7 +71,7 @@ class PerformerRepository @Inject constructor(
             if (cachedArtist == null) {
                 throw e
             }
-        }
+        }*/
     }
 
     private fun CachedPerformer.toDomain(): Performer = Performer(

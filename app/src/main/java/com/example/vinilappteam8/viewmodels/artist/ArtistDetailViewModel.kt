@@ -1,27 +1,23 @@
 package com.example.vinilappteam8.viewmodels.artist
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vinilappteam8.models.CachedPerformer
-import com.example.vinilappteam8.models.Performer
 import com.example.vinilappteam8.repository.PerformerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ArtistListViewModel @Inject constructor(
+class ArtistDetailViewModel @Inject constructor(
     private val performerRepository: PerformerRepository
 ): ViewModel() {
 
-    private val TAG = "ArtistListViewModel"
-
-    private val _performer = MutableStateFlow<List<CachedPerformer>>(emptyList())
-    val performer = _performer.asStateFlow()
+    private val _currentPerformer = MutableStateFlow<CachedPerformer?>(null)
+    val currentPerformer = _currentPerformer
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
@@ -29,25 +25,18 @@ class ArtistListViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage = _errorMessage.asStateFlow()
 
-    init {
-        fetchArtists()
-    }
-
-    fun fetchArtists() {
-        if(_performer.value.isNotEmpty()) return
-
+    fun getPerformerById(id: Int) {
         viewModelScope.launch {
+
             _isLoading.value = true
             _errorMessage.value = null
 
             try {
-                val fetchedArtists = performerRepository.getArtists().first()
-                _performer.value = fetchedArtists
-
+                performerRepository.getArtist(id).collectLatest { performer ->
+                    _currentPerformer.value = performer
+                }
             } catch (e: Exception) {
-                Log.e(TAG, "Error fetching Artists (Musicians): ${e.message}")
                 _errorMessage.value = e.message
-            } finally {
                 _isLoading.value = false
             }
         }

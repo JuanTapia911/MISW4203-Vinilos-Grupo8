@@ -61,4 +61,14 @@ object DatabaseModule {
     fun provideArtistDao(database: AppDatabase): PerformerDao {
         return database.PerformerDao()
     }
+
+    /**
+     * Proporciona una instancia del DAO de Coleccionista.
+     * @param database La instancia de la base de datos.
+     * @return La instancia del DAO de Coleccionista.
+     */
+    @Provides
+    fun provideCollectorDao(database: AppDatabase): CollectorDao {
+        return database.CollectorDao()
+    }
 }

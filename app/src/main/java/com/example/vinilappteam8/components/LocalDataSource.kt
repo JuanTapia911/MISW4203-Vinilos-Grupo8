@@ -6,7 +6,10 @@ import com.example.vinilappteam8.models.dao.PerformerDao
 import com.example.vinilappteam8.models.CachedAlbum
 import com.example.vinilappteam8.models.CachedAlbumPerformersCrossRef
 import com.example.vinilappteam8.models.CachedAlbumWithPerformers
+import com.example.vinilappteam8.models.CachedCollector
+import com.example.vinilappteam8.models.CachedCollectorWithComments
 import com.example.vinilappteam8.models.CachedPerformer
+import com.example.vinilappteam8.models.dao.CollectorDao
 import javax.inject.Inject
 import kotlin.collections.forEach
 
@@ -20,7 +23,9 @@ import kotlin.collections.forEach
 
 class LocalDataSource @Inject constructor(
     private val albumDao: AlbumDao,
-    private val performerDao: PerformerDao
+    private val performerDao: PerformerDao,
+    private val collectorDao: CollectorDao,
+
 ) {
 
     private val TAG = "LocalDataSource" //para el Log
@@ -82,4 +87,6 @@ class LocalDataSource @Inject constructor(
     suspend fun getCachedPerformers(): List<CachedPerformer> = performerDao.getAllPerformers()
     suspend fun getCachedPerformerById(id: Int): CachedPerformer? = performerDao.getPerformerById(id)
     suspend fun clearCachedPerformers() = performerDao.clearAllPerformers()
+
+    suspend fun getCachedCollectors(): List<CachedCollectorWithComments> = collectorDao.getFullCollector()
 }

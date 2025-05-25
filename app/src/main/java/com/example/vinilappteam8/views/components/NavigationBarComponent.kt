@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun NavigationBarComponent(selectedItem: String, onSelectedItem:(String) -> Unit = {}) {
 
-    val items = listOf("Albums", "Artists", "Collections")
+    val items = listOf("Albums", "Artists", "Collectors")
     var selectedIndex = items.indexOf(selectedItem)
     val selectedIcons = listOf(Icons.Filled.LibraryMusic, Icons.Filled.Groups, Icons.Filled.CollectionsBookmark)
     val unselectedIcons = listOf(Icons.Outlined.LibraryMusic, Icons.Outlined.Groups, Icons.Outlined.CollectionsBookmark)

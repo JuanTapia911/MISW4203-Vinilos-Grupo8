@@ -84,7 +84,7 @@ data class CachedPerformerWithAlbums(
 )
 
 
-
+//entidad Uno
 @Entity(tableName = "collector")
 data class CachedCollector(
 
@@ -92,7 +92,41 @@ data class CachedCollector(
     val name: String?,
     val telephone: String?,
     val email: String?,
+    val timestamp: Long = System.currentTimeMillis()
+
 )
+
+//entidad muchos (un coleccionista puede tener muchos comentarios)
+@Entity(tableName = "comments",
+    foreignKeys = [
+        ForeignKey(
+            entity = CachedCollector::class,
+            parentColumns = ["id"],
+            childColumns = ["collectorId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ])
+data class CachedComments(
+
+    @PrimaryKey val id: Int,
+    val description: String?,
+    val rating: Int?,
+    val timestamp: Long = System.currentTimeMillis(),
+    val collectorId: Int,
+)
+
+data class CachedCollectorWithComments(
+    @Embedded val collector: CachedCollector,
+    @Relation(
+        parentColumn = "id",
+        entity = CachedComments::class,
+        entityColumn = "collectorId"
+    )
+    val comments: List<CachedComments>
+)
+
+
+
 
 
 

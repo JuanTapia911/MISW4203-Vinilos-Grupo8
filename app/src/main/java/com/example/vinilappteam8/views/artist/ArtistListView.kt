@@ -31,6 +31,8 @@ import com.example.vinilappteam8.ui.theme.spot_gray
 import com.example.vinilappteam8.ui.theme.spot_light_gray
 import com.example.vinilappteam8.ui.theme.spot_white
 import com.example.vinilappteam8.viewmodels.artist.ArtistListViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 @Composable
@@ -89,11 +91,26 @@ fun ArtistListView(
             ) {
                 items(items = artists, key = { it.id }) { artist ->
 
-                    //Log.d("ArtistListView", "Artist: $artist")
-                    if(artist.type == null) {
-                        Log.d("ArtistListView", "Artist type is null")
+
+                    val formattedDate = if(artist.type == "Band") {
+                        artist.creationDate?.let {
+                            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                            formatter.timeZone = java.util.TimeZone.getTimeZone("UTC")
+                            formatter.parse(it)?.let { date ->
+                                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
+                            }
+                        }
                     } else {
-                        Log.d("ArtistListView", "Artist type: ${artist.type}")
+                        artist.birthDate?.let {
+                            val formatter = SimpleDateFormat(
+                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                                Locale.getDefault()
+                            )
+                            formatter.timeZone = java.util.TimeZone.getTimeZone("UTC")
+                            formatter.parse(it)?.let { date ->
+                                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
+                            }
+                        }
                     }
 
                     Card(
@@ -132,9 +149,10 @@ fun ArtistListView(
                                     style = MaterialTheme.typography.titleLarge,
                                     color = spot_white
                                 )
+
                                 Text(
                                     modifier = Modifier.padding(bottom = 5.dp),
-                                    text = if(artist.type == "Band") {artist.creationDate.toString()} else {artist.birthDate.toString()},
+                                    text = formattedDate.toString(),
                                     style = MaterialTheme.typography.bodyLarge,
                                     color = spot_light_gray,
                                     fontWeight = FontWeight.Bold,
